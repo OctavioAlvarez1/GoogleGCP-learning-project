@@ -89,3 +89,31 @@ while True:
     print("Published:", event)
     time.sleep(2)
 
+```
+### 🔹 2. Carga de datos en BigQuery
+Se creó el dataset data_ecommerce_demo dentro del proyecto data-ecommerce-demo.
+Se cargaron las tablas batch desde CSV:
+
+- customers
+- orders
+- order_items
+- products
+
+Ejemplo de consultas exploratorias (batch):
+
+```python
+  -- Cantidad de clientes por país
+  SELECT country, COUNT(*) AS total_clientes
+  FROM `data-ecommerce-demo.data_ecommerce_demo.customers`
+  GROUP BY country
+  ORDER BY total_clientes DESC;
+
+  -- Clientes por año de registro
+  SELECT 
+    EXTRACT(YEAR FROM signup_date) AS anio_registro,
+    COUNT(*) AS total_clientes
+  FROM `data-ecommerce-demo.data_ecommerce_demo.customers`
+  GROUP BY anio_registro
+  ORDER BY anio_registro;
+
+```
