@@ -108,8 +108,52 @@ Pasos:
   "unit_price": 120.50,
   "event_ts": "2025-09-15 14:23:55"
 }
+```
+Código principal del pipeline (simplificado - publisher.py )
+```python
+
+import json
+import apache_beam as beam
+from apache_beam.options.pipeline_options import PipelineOptions, StandardOptions
+from apache_beam.io.gcp.bigquery import WriteToBigQuery
+
+class ParseJson(beam.DoFn):
+    def process(self, msg_bytes):
+        msg = json.loads(msg_bytes.decode("utf-8"))
+        yield {
+            "order_id": msg.get("order_id"),
+            "customer_id": msg.get("customer_id"),
+            "product_id": msg.get("product_id"),
+            "gross_amount": float(msg.get("qty",0)) * float(msg.get("unit_price",0)),
+            "event_ts": msg.get("event_ts")
+        }
+
+def run():
+    options = PipelineOptions(
+        runner="DataflowRunner",
+        project="data-ecommerce-demo",
+        region="us-central1",
+        temp_location="gs://bucket-ecommerce-octavio/temp",
+        staging_location="gs://bucket-ecommerce-octavio/staging",
+        job_name="pubsub-to-bigquery-demo"
+    )
+    options.view_as(StandardOptions).streaming = True
+
+    with beam.Pipeline(options=options) as p:
+        (p
+         | "ReadPubSub" >> beam.io.ReadFromPubSub(
+                subscription="projects/data-ecommerce-demo/subscriptions/order_events-sub-demo")
+         | "ParseJSON" >> beam.ParDo(ParseJson())
+         | "WriteToBQ" >> WriteToBigQuery(
+                table="data-ecommerce-demo.data_ecommerce_demo.fact_sales_streaming",
+                schema="order_id:STRING, customer_id:STRING, product_id:STRING, gross_amount:FLOAT, event_ts:TIMESTAMP",
+                write_disposition="WRITE_APPEND"
+            )
+        )
 
 ```
+📌 Resultado: cada orden publicada en Pub/Sub aparece en tiempo real en BigQuery → tabla
+
 ---
 ## 5. 📂 Paso a Paso del Proyecto
 
