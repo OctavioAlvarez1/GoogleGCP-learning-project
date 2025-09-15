@@ -71,7 +71,7 @@ El objetivo es **crear dashboards en Looker Studio** que permitan analizar métr
 
 Pasos:
 
-  1 - Subimos los archivos CSV (customers.csv, orders.csv, order_items.csv, products.csv) al bucket bucket-ecommerce-octavio/datasets/.
+  1 - Subimos los archivos CSV (customers.csv, orders.csv, order_items.csv, products.csv) al bucket ecommerce-demo-bucker/datasets/.
   <br>
   2 - Desde BigQuery cargamos esos archivos a tablas dentro del dataset data_ecommerce_demo.
   <br>
@@ -114,47 +114,34 @@ Pasos:
   "event_ts": "2025-09-15 14:23:55"
 }
 ```
-Código principal del pipeline (simplificado - publisher.py )
+Vista que unifica batch y streaming
 ```python
 
-import json
-import apache_beam as beam
-from apache_beam.options.pipeline_options import PipelineOptions, StandardOptions
-from apache_beam.io.gcp.bigquery import WriteToBigQuery
+-- Vista que combina batch con streaming para ser utilizada en Looker Studio --
 
-class ParseJson(beam.DoFn):
-    def process(self, msg_bytes):
-        msg = json.loads(msg_bytes.decode("utf-8"))
-        yield {
-            "order_id": msg.get("order_id"),
-            "customer_id": msg.get("customer_id"),
-            "product_id": msg.get("product_id"),
-            "gross_amount": float(msg.get("qty",0)) * float(msg.get("unit_price",0)),
-            "event_ts": msg.get("event_ts")
-        }
+CREATE OR REPLACE VIEW `data-ecommerce-demo.data_ecommerce_demo.v_fact_sales_all` AS
+-- Histórico (batch)
+SELECT 
+  o.order_id,
+  TIMESTAMP(o.order_date) AS ts,  
+  o.customer_id,
+  oi.product_id,
+  (oi.qty * oi.unit_price) AS gross_amount,
+  'batch' AS source
+FROM `data-ecommerce-demo.data_ecommerce_demo.orders` o
+JOIN `data-ecommerce-demo.data_ecommerce_demo.order_items` oi USING (order_id)
 
-def run():
-    options = PipelineOptions(
-        runner="DataflowRunner",
-        project="data-ecommerce-demo",
-        region="us-central1",
-        temp_location="gs://bucket-ecommerce-octavio/temp",
-        staging_location="gs://bucket-ecommerce-octavio/staging",
-        job_name="pubsub-to-bigquery-demo"
-    )
-    options.view_as(StandardOptions).streaming = True
+UNION ALL
 
-    with beam.Pipeline(options=options) as p:
-        (p
-         | "ReadPubSub" >> beam.io.ReadFromPubSub(
-                subscription="projects/data-ecommerce-demo/subscriptions/order_events-sub-demo")
-         | "ParseJSON" >> beam.ParDo(ParseJson())
-         | "WriteToBQ" >> WriteToBigQuery(
-                table="data-ecommerce-demo.data_ecommerce_demo.fact_sales_streaming",
-                schema="order_id:STRING, customer_id:STRING, product_id:STRING, gross_amount:FLOAT, event_ts:TIMESTAMP",
-                write_disposition="WRITE_APPEND"
-            )
-        )
+-- Streaming (tiempo real)
+SELECT 
+  order_id,
+  event_ts AS ts,
+  customer_id,
+  product_id,
+  gross_amount,
+  'streaming' AS source
+FROM `data-ecommerce-demo.data_ecommerce_demo.fact_sales_streaming`;
 
 ```
 📌 Resultado: cada orden publicada en Pub/Sub aparece en tiempo real en BigQuery → tabla
@@ -217,19 +204,30 @@ Ejemplo de consultas exploratorias (batch):
   ORDER BY anio_registro;
 
 ```
-### 🔹 3. Creación de vistas para KPIs (Batch)
-Ejemplo de vista de ventas históricas:
+### 🔹 3. Creación de vistas 
+Heatmap que muestra la intensidad de ventas por día y hora:
 
 ```python
-  CREATE OR REPLACE VIEW `data-ecommerce-demo.data_ecommerce_demo.v_fact_sales_batch` AS
-  SELECT 
-    o.order_id,
-    TIMESTAMP(o.order_date) AS ts,  
-    o.customer_id,
-    oi.product_id,
-    (oi.qty * oi.unit_price) AS gross_amount
-  FROM `data-ecommerce-demo.data_ecommerce_demo.orders` o
-  JOIN `data-ecommerce-demo.data_ecommerce_demo.order_items` oi USING (order_id);
+ -- Heatmap que muestra la intensidad de ventas por día y hora (Batch + streaming)
+CREATE OR REPLACE VIEW `data-ecommerce-demo.data_ecommerce_demo.v_sales_heatmap` AS
+SELECT 
+  CASE EXTRACT(DAYOFWEEK FROM ts)
+    WHEN 1 THEN 'Sunday'
+    WHEN 2 THEN 'Monday'
+    WHEN 3 THEN 'Tuesday'
+    WHEN 4 THEN 'Wednesday'
+    WHEN 5 THEN 'Thursday'
+    WHEN 6 THEN 'Friday'
+    WHEN 7 THEN 'Saturday'
+  END AS day_name,
+  EXTRACT(HOUR FROM ts) AS hour,
+  SUM(gross_amount) AS revenue
+FROM `data-ecommerce-demo.data_ecommerce_demo.v_fact_sales_all`
+GROUP BY day_name, hour
+ORDER BY day_name, hour;
 
 
 ```
+### 🔹 4. Dashboard Batch
+
+<div align="center"><img src="Imagenes/batchDashboard.png"/></div>
