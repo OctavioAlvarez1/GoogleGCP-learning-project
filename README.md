@@ -93,7 +93,7 @@ Pasos:
 ---
  🔹 Pipeline Streaming (Pub/Sub → Dataflow → BigQuery)
 
- <div align="center"><img src="Imagenes/streaming.png" width="600" /></div>
+ <div align="center"><img src="Imagenes/Streaming.png" width="600" /></div>
 
  📌 Objetivo: procesar órdenes simuladas en tiempo real y guardarlas en BigQuery en la tabla fact_sales_streaming.
 
