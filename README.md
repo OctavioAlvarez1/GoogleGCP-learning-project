@@ -94,7 +94,7 @@ Pasos:
 
   Componentes:
   
- - Archivo publisher.py → script en Python que publica eventos simulados en un tópico de Pub/Sub.
+ - Archivo publisher.py → script en Python que publica eventos simulados en un Tema de Pub/Sub.
  - Dataflow (Apache Beam) → pipeline que lee los eventos, los transforma y los escribe en BigQuery.
   
   Ejemplo de evento publicado
