@@ -26,7 +26,7 @@ El objetivo es **crear dashboards en Looker Studio** que permitan analizar métr
 
 ## 3. 🗂️ Modelo Entidad-Relación (ERD)
 
-<img src="Imagenes/MER.png" width="600" />
+<div align="center"><img src="Imagenes/MER.png" width="600" /></div>
 
 ### Tablas principales
 - **Customers**
