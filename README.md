@@ -15,7 +15,7 @@ El objetivo es **crear dashboards en Looker Studio** que permitan analizar métr
 ## 2. 🛠️ Servicios de Google Cloud utilizados
 | Servicio | Uso en el Proyecto |
 |----------|--------------------|
-| <img src="Imagenes/cloudstorage.png" width="50" height="50"/> | **Cloud Storage**: almacenamiento de los CSV batch y los scripts Python. |
+| <img src="Imagenes/cloudstorage.png" width="50" height="auto"/> | **Cloud Storage**: almacenamiento de los CSV batch y los scripts Python. |
 | ![BigQuery](./imagenes/bigquery.png) | **BigQuery**: Data Warehouse para datos históricos, vistas analíticas y unión batch + streaming. |
 | ![Pub/Sub](./imagenes/pubsub.png) | **Pub/Sub**: Ingesta de eventos en tiempo real (órdenes simuladas). |
 | ![Dataflow](./imagenes/dataflow.png) | **DataFlow**: Pipeline de streaming que procesa los eventos y los inserta en BigQuery. |
