@@ -15,12 +15,12 @@ El objetivo es **crear dashboards en Looker Studio** que permitan analizar métr
 ## 2. 🛠️ Servicios de Google Cloud utilizados
 | Servicio | Uso en el Proyecto |
 |----------|--------------------|
-| ![Cloud Storage](./imagenes/cloud_storage.png) | Almacenamiento de los CSV batch y los scripts Python. |
-| ![BigQuery](./imagenes/bigquery.png) | Data Warehouse para datos históricos, vistas analíticas y unión batch + streaming. |
-| ![Pub/Sub](./imagenes/pubsub.png) | Ingesta de eventos en tiempo real (órdenes simuladas). |
-| ![Dataflow](./imagenes/dataflow.png) | Pipeline de streaming que procesa los eventos y los inserta en BigQuery. |
-| ![Python](./imagenes/python.png) | Scripts de simulación (`publisher.py`) y pipeline. |
-| Looker Studio | Dashboards interactivos para análisis. |
+| ![Cloud Storage](./imagenes/cloud_storage.png) | **Cloud Storage**: almacenamiento de los CSV batch y los scripts Python. |
+| ![BigQuery](./imagenes/bigquery.png) | **BigQuery**: Data Warehouse para datos históricos, vistas analíticas y unión batch + streaming. |
+| ![Pub/Sub](./imagenes/pubsub.png) | **Pub/Sub**: Ingesta de eventos en tiempo real (órdenes simuladas). |
+| ![Dataflow](./imagenes/dataflow.png) | **DataFlow**: Pipeline de streaming que procesa los eventos y los inserta en BigQuery. |
+| ![Python](./imagenes/python.png) | **Python**: Scripts de simulación (`publisher.py`) y pipeline. |
+| Looker Studio | **Looker Studio**: Dashboards interactivos para análisis. |
 
 ---
 
@@ -94,7 +94,7 @@ Pasos:
 
   Componentes:
   
- -  publisher.py → script que publica eventos simulados en un tópico de Pub/Sub.
+ - Archivo publisher.py → script en Python que publica eventos simulados en un tópico de Pub/Sub.
  - Dataflow (Apache Beam) → pipeline que lee los eventos, los transforma y los escribe en BigQuery.
   
   Ejemplo de evento publicado
