@@ -17,10 +17,10 @@ El objetivo es **crear dashboards en Looker Studio** que permitan analizar métr
 |----------|--------------------|
 |  <div align="center"><img src="Imagenes/cloudstorage.png" width="50" height="50"/></div> | **Cloud Storage**: almacenamiento de los CSV batch y los scripts Python. |
 |  <div align="center"><img src="Imagenes/bigquery.png" width="50" height="50"/></div>  | **BigQuery**: Data Warehouse para datos históricos, vistas analíticas y unión batch + streaming. |
-| <div align="center"><img src="pub.png" width="50" height="50"/></div> | **Pub/Sub**: Ingesta de eventos en tiempo real (órdenes simuladas). |
-| <div align="center"><img src="dataflow.png" width="50" height="50"/></div>  | **DataFlow**: Pipeline de streaming que procesa los eventos y los inserta en BigQuery. |
-| <div align="center"><img src="python.png" width="50" height="50"/></div> | **Python**: Scripts de simulación (`publisher.py`) y pipeline. |
-| <div align="center"><img src="looker.png" width="50" height="50"/></div> | **Looker Studio**: Dashboards interactivos para análisis. |
+| <div align="center"><img src="Imagenes/pub.png" width="50" height="50"/></div> | **Pub/Sub**: Ingesta de eventos en tiempo real (órdenes simuladas). |
+| <div align="center"><img src="Imagenes/dataflow.png" width="50" height="50"/></div>  | **DataFlow**: Pipeline de streaming que procesa los eventos y los inserta en BigQuery. |
+| <div align="center"><img src="Imagenes/python.png" width="50" height="50"/></div> | **Python**: Scripts de simulación (`publisher.py`) y pipeline. |
+| <div align="center"><img src="Imagenes/looker.png" width="50" height="50"/></div> | **Looker Studio**: Dashboards interactivos para análisis. |
 
 ---
 
