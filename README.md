@@ -89,10 +89,11 @@ Pasos:
   JOIN `data-ecommerce-demo.data_ecommerce_demo.order_items` oi USING (order_id);
  ```
  📌 Resultado: Vista que consolida ventas históricas con detalle de revenue por orden, cliente y producto.
-
+ 
+---
  🔹 Pipeline Streaming (Pub/Sub → Dataflow → BigQuery)
 
- Imagen
+ <div align="center"><img src="Imagenes/streaming.png" width="600" /></div>
 
  📌 Objetivo: procesar órdenes simuladas en tiempo real y guardarlas en BigQuery en la tabla fact_sales_streaming.
 
