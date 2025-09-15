@@ -65,7 +65,7 @@ El objetivo es **crear dashboards en Looker Studio** que permitan analizar métr
 
 🔹 Pipeline Batch (ETL con BigQuery)
 
-Imagen
+<div align="center"><img src="Imagenes/batch.png" width="600" /></div>
 
 📌 Objetivo: cargar los archivos CSV históricos desde Cloud Storage a BigQuery y generar la vista de ventas históricas (v_fact_sales_batch).
 
