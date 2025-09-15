@@ -59,8 +59,59 @@ El objetivo es **crear dashboards en Looker Studio** que permitan analizar métr
 ![Modelo ER](./imagenes/modelo_er.png)  
 
 ---
+## 4. 📂 Pipelines
 
-## 4. 📂 Paso a Paso del Proyecto
+🔹 Pipeline Batch (ETL con BigQuery)
+
+Imagen
+
+📌 Objetivo: cargar los archivos CSV históricos desde Cloud Storage a BigQuery y generar la vista de ventas históricas (v_fact_sales_batch).
+
+Pasos:
+
+  1 - Subimos los archivos CSV (customers.csv, orders.csv, order_items.csv, products.csv) al bucket bucket-ecommerce-octavio/datasets/.
+  2 - Desde BigQuery cargamos esos archivos a tablas dentro del dataset data_ecommerce_demo.
+  3 - Creamos la vista de hechos batch:
+
+  ```python
+  CREATE OR REPLACE VIEW `data-ecommerce-demo.data_ecommerce_demo.v_fact_sales_batch` AS
+  SELECT 
+    o.order_id,
+    TIMESTAMP(o.order_date) AS ts,  
+    o.customer_id,
+    oi.product_id,
+    (oi.qty * oi.unit_price) AS gross_amount
+  FROM `data-ecommerce-demo.data_ecommerce_demo.orders` o
+  JOIN `data-ecommerce-demo.data_ecommerce_demo.order_items` oi USING (order_id);
+ ```
+ 📌 Resultado: Vista que consolida ventas históricas con detalle de revenue por orden, cliente y producto.
+
+ 🔹 Pipeline Streaming (Pub/Sub → Dataflow → BigQuery)
+
+ Imagen
+
+ 📌 Objetivo: procesar órdenes simuladas en tiempo real y guardarlas en BigQuery en la tabla fact_sales_streaming.
+
+  Componentes:
+  
+ -  publisher.py → script que publica eventos simulados en un tópico de Pub/Sub.
+ - Dataflow (Apache Beam) → pipeline que lee los eventos, los transforma y los escribe en BigQuery.
+  
+  Ejemplo de evento publicado
+```python
+  {
+  "event_id": "123e4567-e89b-12d3-a456-426614174000",
+  "order_id": "O1234",
+  "customer_id": "C054",
+  "product_id": "P002",
+  "qty": 2,
+  "unit_price": 120.50,
+  "event_ts": "2025-09-15 14:23:55"
+}
+
+```
+---
+## 5. 📂 Paso a Paso del Proyecto
 
 ### 🔹 1. Ingesta en Cloud Storage
 Se creó el bucket **`bucket-ecommerce-octavio`** con:
