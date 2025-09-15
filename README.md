@@ -102,18 +102,34 @@ Se cargaron las tablas batch desde CSV:
 Ejemplo de consultas exploratorias (batch):
 
 ```python
-  -- Cantidad de clientes por país
+  -- Cantidad de clientes por país --
   SELECT country, COUNT(*) AS total_clientes
   FROM `data-ecommerce-demo.data_ecommerce_demo.customers`
   GROUP BY country
   ORDER BY total_clientes DESC;
 
-  -- Clientes por año de registro
+  -- Clientes por año de registro --
   SELECT 
     EXTRACT(YEAR FROM signup_date) AS anio_registro,
     COUNT(*) AS total_clientes
   FROM `data-ecommerce-demo.data_ecommerce_demo.customers`
   GROUP BY anio_registro
   ORDER BY anio_registro;
+
+```
+### 🔹 3. Creación de vistas para KPIs (Batch)
+Ejemplo de vista de ventas históricas:
+
+```python
+  CREATE OR REPLACE VIEW `data-ecommerce-demo.data_ecommerce_demo.v_fact_sales_batch` AS
+  SELECT 
+    o.order_id,
+    TIMESTAMP(o.order_date) AS ts,  
+    o.customer_id,
+    oi.product_id,
+    (oi.qty * oi.unit_price) AS gross_amount
+  FROM `data-ecommerce-demo.data_ecommerce_demo.orders` o
+  JOIN `data-ecommerce-demo.data_ecommerce_demo.order_items` oi USING (order_id);
+
 
 ```
