@@ -72,7 +72,9 @@ El objetivo es **crear dashboards en Looker Studio** que permitan analizar métr
 Pasos:
 
   1 - Subimos los archivos CSV (customers.csv, orders.csv, order_items.csv, products.csv) al bucket bucket-ecommerce-octavio/datasets/.
+  <br>
   2 - Desde BigQuery cargamos esos archivos a tablas dentro del dataset data_ecommerce_demo.
+  <br>
   3 - Creamos la vista de hechos batch:
 
   ```python
