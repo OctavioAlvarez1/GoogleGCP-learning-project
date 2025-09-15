@@ -26,6 +26,8 @@ El objetivo es **crear dashboards en Looker Studio** que permitan analizar métr
 
 ## 3. 🗂️ Modelo Entidad-Relación (ERD)
 
+<img src="Imagenes/MER.png" width="600" />
+
 ### Tablas principales
 - **Customers**
   - `customer_id (PK)`
@@ -56,7 +58,7 @@ El objetivo es **crear dashboards en Looker Studio** que permitan analizar métr
 
 📌 **OrderItems es la tabla puente**: conecta órdenes con productos y permite calcular métricas como revenue.  
 
-![Modelo ER](./imagenes/modelo_er.png)  
+
 
 ---
 ## 4. 📂 Pipelines
