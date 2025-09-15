@@ -231,3 +231,33 @@ ORDER BY day_name, hour;
 ### 🔹 4. Dashboard Batch
 
 <div align="center"><img src="Imagenes/batchDashboard.png"/></div>
+
+KPIs principales:
+
+Total Revenue
+
+Total Orders
+
+Unique Clients
+
+Average Order Value (AOV)
+
+Gráficos:
+
+Revenue a lo largo del tiempo → crecimiento acumulado.
+
+Revenue por categoría → distribución entre Books, Clothing, Electronics, etc.
+
+Revenue por cliente/país/categoría → tabla de detalle.
+
+Revenue por país → mapa geográfico.
+
+📌 Insights:
+
+Chile y Argentina concentran la mayoría de clientes.
+
+Electronics y Books son las categorías más rentables.
+
+Ticket promedio (AOV): $1.465,68.
+
+### 🔹 4. Dashboard Streaming
