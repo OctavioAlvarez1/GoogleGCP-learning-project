@@ -147,8 +147,10 @@ FROM `data-ecommerce-demo.data_ecommerce_demo.fact_sales_streaming`;
 📌 Resultado: cada orden publicada en Pub/Sub aparece en tiempo real en BigQuery → tabla
 
 ---
+---
+## 5. 📂 Dashboards
 
-### 🔹 4. Dashboard Batch
+### 🔹 1. Dashboard Batch
 
 <div align="center"><img src="Imagenes/batchDashboard.png"/></div>
 
@@ -172,4 +174,26 @@ FROM `data-ecommerce-demo.data_ecommerce_demo.fact_sales_streaming`;
   - Electronics y Books son las categorías más rentables.
   - Ticket promedio (AOV): $1.465,68.
 
-### 🔹 4. Dashboard Streaming
+### 🔹 2. Dashboard batch y Streaming
+
+<div align="center"><img src="Imagenes/batchStreaming.png"/></div>
+
+**KPIs principales:**
+
+  - Total Revenue
+  - Total Orders
+  - Unique Clients
+  - Average Order Value (AOV)
+
+**Gráficos:**
+
+  - Revenue a lo largo del tiempo → crecimiento acumulado.
+  - Revenue por categoría → distribución entre Books, Clothing, Electronics, etc.
+  - Revenue por cliente/país/categoría → tabla de detalle.
+  - Revenue por país → mapa geográfico.
+
+📌 Insights:
+
+  - Chile y Argentina concentran la mayoría de clientes.
+  - Electronics y Books son las categorías más rentables.
+  - Ticket promedio (AOV): $1.465,68.
