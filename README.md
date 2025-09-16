@@ -170,9 +170,12 @@ FROM `data-ecommerce-demo.data_ecommerce_demo.fact_sales_streaming`;
 
 📌 Insights:
 
-  - Chile y Argentina concentran la mayoría de clientes.
-  - Electronics y Books son las categorías más rentables.
-  - Ticket promedio (AOV): $1.465,68.
+  - Crecimiento sostenido: El revenue muestra una tendencia acumulativa positiva desde septiembre 2024 hasta julio 2025, sin caídas bruscas.
+  - Categorías líderes: Electronics y Books concentran la mayor parte del revenue, seguidas por Home.
+  - Distribución geográfica: La mayoría de los ingresos provienen de Chile y Argentina, aunque también hay ventas en otros países de Sudamérica.
+  - Base de clientes: Se registraron 84 clientes únicos en el período, con un ticket promedio (AOV) elevado de $1.465,68, lo que indica compras     de alto valor.
+
+Clientes destacados: Algunos clientes recurrentes (ej. en Chile y Paraguay) aparecen con montos significativos en categorías como Electronics.
 
 ### 🔹 2. Dashboard batch y Streaming
 
@@ -181,19 +184,30 @@ FROM `data-ecommerce-demo.data_ecommerce_demo.fact_sales_streaming`;
 **KPIs principales:**
 
   - Total Revenue
-  - Total Orders
-  - Unique Clients
+  - Batch Revenue
+  - Revenue Streaming (last 24 hs)
   - Average Order Value (AOV)
 
 **Gráficos:**
 
-  - Revenue a lo largo del tiempo → crecimiento acumulado.
-  - Revenue por categoría → distribución entre Books, Clothing, Electronics, etc.
-  - Revenue por cliente/país/categoría → tabla de detalle.
-  - Revenue por país → mapa geográfico.
+  - Revenue along the time by Source (línea) → Evolución temporal del revenue separado en streaming (azul) y batch (naranja).
+  - Revenue by Source historical (barras) → Comparación acumulada del revenue total de streaming vs batch.
+  - Revenue by Product_ID – Both Sources (barras horizontales) → Revenue generado por cada producto (P001, P004, P002, P007, P003)..
+  - Revenue by Day (tabla con barra visual) → Revenue agregado por día de la semana. .
 
-📌 Insights:
+📌 Insights principales
 
-  - Chile y Argentina concentran la mayoría de clientes.
-  - Electronics y Books son las categorías más rentables.
-  - Ticket promedio (AOV): $1.465,68.
+  - Batch vs Streaming:
+  El revenue batch ($293K) es mayor que el generado en tiempo real ($96K), pero el streaming muestra picos altos en momentos concretos, lo que      evidencia la utilidad de capturar datos en vivo.
+
+  - Tendencia temporal:
+  El gráfico de líneas muestra un pico significativo de revenue en streaming alrededor del 13–15 de septiembre, indicando un evento puntual de      alta demanda.
+
+  - Top productos:
+  Los productos P001 y P004 lideran en revenue, con valores cercanos a $36K–$38K. Esto refleja cuáles tienen mayor impacto en las ventas.
+
+  - Revenue histórico por fuente:
+  El acumulado muestra que streaming aporta $437K y batch $293K, confirmando que los datos en tiempo real son una parte creciente del negocio.
+
+  - Distribución semanal:
+  Los días con mayor revenue son domingo ($152K) y martes ($147K), mientras que los sábados son los más bajos ($38K). Esto da pistas para           planificar promociones o reforzar stock en días de alta demanda.
