@@ -70,12 +70,12 @@ El objetivo es **crear dashboards en Looker Studio** que permitan analizar métr
 📌 Objetivo: cargar los archivos CSV históricos desde Cloud Storage a BigQuery y generar la vista de ventas históricas (v_fact_sales_batch).
 
 Pasos:
-
-  1 - Subimos los archivos CSV (customers.csv, orders.csv, order_items.csv, products.csv) al bucket ecommerce-demo-bucker/datasets/.
+  1 - Creo el bucket ecommerce-demo-bucket en Cloud Storage con las carpetas datasets y pipelines
+  2 - Subo los archivos CSV (customers.csv, orders.csv, order_items.csv, products.csv) al bucket ecommerce-demo-bucker/datasets/.
   <br>
-  2 - Desde BigQuery cargamos esos archivos a tablas dentro del dataset data_ecommerce_demo.
+  2 - Desde BigQuery cargo esos archivos a tablas dentro del dataset data_ecommerce_demo.
   <br>
-  3 - Creamos la vista de hechos batch:
+  4 - Creamos la vista de hechos batch:
 
   ```python
   CREATE OR REPLACE VIEW `data-ecommerce-demo.data_ecommerce_demo.v_fact_sales_batch` AS
@@ -150,7 +150,7 @@ FROM `data-ecommerce-demo.data_ecommerce_demo.fact_sales_streaming`;
 ## 5. 📂 Paso a Paso del Proyecto
 
 ### 🔹 1. Ingesta en Cloud Storage
-Se creó el bucket **`bucket-ecommerce-octavio`** con:
+Se creó el bucket **`ecommerce-demo-bucket `** con:
 - Carpeta `/datasets` → CSV históricos (customers, orders, order_items, products).  
 - Carpeta `/pipelines` → scripts Python:  
   - **publisher.py** → publica eventos simulados en Pub/Sub.  
